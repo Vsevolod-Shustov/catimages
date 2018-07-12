@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Cat Images</string>
+    <string name="header_main">Powered by <a href="http://thecatapi.com/">thecatapi.com</a></string>
+</resources>

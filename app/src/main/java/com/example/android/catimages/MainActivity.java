@@ -1,5 +1,10 @@
 package com.example.android.catimages;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,9 +26,11 @@ import static com.example.android.catimages.Parsers.parseXMLForTag;
 
 public class MainActivity extends AppCompatActivity {
     private String requestUrl ="http://thecatapi.com/api/images/get?format=xml&type=jpg&size=med&results_per_page=3";
-    private String imageUrl = "http://24.media.tumblr.com/tumblr_m3dr9lfmr81r73wdao1_500.jpg";
-    private ArrayList<String> imageUrls = new ArrayList<String>();
+    //private String imageUrl = "http://24.media.tumblr.com/tumblr_m3dr9lfmr81r73wdao1_500.jpg";
+    //private ArrayList<String> imageUrls = new ArrayList<String>();
     private static RequestQueue requestQueue;
+    private ImageViewModel mModel;
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,23 @@ public class MainActivity extends AppCompatActivity {
                 getNewImages();
             }
         });
+
+        // Get the ViewModel.
+        mModel = ViewModelProviders.of(this).get(ImageViewModel.class);
+
+        // Create the observer which updates the UI.
+        final Observer<String> imageObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newImage) {
+                // Update the UI
+                Log.d("mytesttag", "breakpoint 2: "+ mModel.getCurrentImage());
+                ImageView imageView = (ImageView) findViewById(R.id.images);
+                GlideApp.with(mContext).load(newImage).into(imageView);
+            }
+        };
+
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        mModel.getCurrentImage().observe(this, imageObserver);
     }
 
     private void getNewImages () {
@@ -62,8 +86,10 @@ public class MainActivity extends AppCompatActivity {
                     //Parsers.xpathParseXMLForTag(response);
                     ArrayList<String> parsedImageUrl = parseXMLForTag(response, "url");
                     Log.d("mytesttag", "Image URL is: "+ parsedImageUrl);
-                    imageUrls = parsedImageUrl;
-                    loadImagesIntoViews(imageUrls.get(0));
+                    //imageUrls = parsedImageUrl;
+                    mModel.getCurrentImage().setValue(parsedImageUrl.get(0));
+                    Log.d("mytesttag", "breakpoint 1: "+ mModel.getCurrentImage());
+                    //loadImagesIntoViews(imageUrls.get(0));
                 }
             }, new Response.ErrorListener() {
         @Override

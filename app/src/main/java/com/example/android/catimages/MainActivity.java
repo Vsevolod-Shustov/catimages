@@ -40,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         //loadImagesIntoViews("http://24.media.tumblr.com/tumblr_m3dr9lfmr81r73wdao1_500.jpg");
-        getNewImages();
+        //getNewImages();
+        if (savedInstanceState == null) {
+            getNewImages();
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -72,10 +75,10 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void loadImagesIntoViews (String url) {
+    /*private void loadImagesIntoViews (String url) {
         ImageView imageView = (ImageView) findViewById(R.id.images);
         GlideApp.with(this).load(url).into(imageView);
-    }
+    }*/
 
     StringRequest stringRequest = new StringRequest(Request.Method.GET, requestUrl,
             new Response.Listener<String>() {

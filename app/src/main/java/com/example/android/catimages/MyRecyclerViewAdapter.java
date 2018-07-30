@@ -37,7 +37,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         String image = mData.get(position);
         //holder.myTextView.setText(animal);
         Context recyclerviewContext = imageView.getContext();
-        GlideApp.with(recyclerviewContext).load(image).into(imageView);
+        GlideApp.with(recyclerviewContext)
+                .load(image)
+                .into(imageView);
     }
 
     // total number of rows

@@ -26,7 +26,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recyclerview_image, parent, false);
+        View view = mInflater.inflate(R.layout.recyclerview_gridimage, parent, false);
         return new ViewHolder(view);
     }
 
@@ -60,7 +60,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
         ViewHolder(View itemView) {
             super(itemView);
-            myImageView = itemView.findViewById(R.id.recyclerview_image);
+            myImageView = itemView.findViewById(R.id.recyclerview_gridimage);
             itemView.setOnClickListener(this);
         }
 

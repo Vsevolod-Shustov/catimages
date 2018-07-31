@@ -6,8 +6,10 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,7 +29,7 @@ import static com.example.android.catimages.Parsers.parseXMLForTag;
 
 
 public class MainActivity extends AppCompatActivity {
-    private String requestUrl ="http://thecatapi.com/api/images/get?format=xml&type=jpg&size=med&results_per_page=3";
+    private String requestUrl ="http://thecatapi.com/api/images/get?format=xml&type=jpg&size=med&results_per_page=12";
     //private String imageUrl = "http://24.media.tumblr.com/tumblr_m3dr9lfmr81r73wdao1_500.jpg";
     //private ArrayList<String> imageUrls = new ArrayList<String>();
     private static RequestQueue requestQueue;
@@ -57,8 +59,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //int numberOfColumns = 2;
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.column_count)));
+        ViewCompat.setNestedScrollingEnabled(recyclerView, false);
+        //recyclerView.setNestedScrollingEnabled(false);
+        //recyclerView.setHasFixedSize(true);
         adapter = new MyRecyclerViewAdapter(this, new ArrayList<String>());
+        //adapter.setHasStableIds(true);
         //adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 

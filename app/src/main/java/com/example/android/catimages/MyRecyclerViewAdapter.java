@@ -39,6 +39,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         Context recyclerviewContext = imageView.getContext();
         GlideApp.with(recyclerviewContext)
                 .load(image)
+                .centerCrop()
                 .into(imageView);
     }
 

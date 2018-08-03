@@ -8,36 +8,11 @@
     tools:context=".MainActivity">
 
 
-    <ScrollView
-        android:id="@+id/scrollview"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="vertical" />
-
-            <TextView
-                android:id="@+id/header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:linksClickable="true"
-                android:paddingTop="@dimen/padding"
-                android:paddingLeft="@dimen/padding"
-                android:text="@string/header_main" />
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical" />
 
 
     <android.support.design.widget.FloatingActionButton

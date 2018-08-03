@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import static com.example.android.catimages.Parsers.parseXMLForTag;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
     private String requestUrl ="http://thecatapi.com/api/images/get?format=xml&type=jpg&size=med&results_per_page=12";
     //private String imageUrl = "http://24.media.tumblr.com/tumblr_m3dr9lfmr81r73wdao1_500.jpg";
     //private ArrayList<String> imageUrls = new ArrayList<String>();
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         //recyclerView.setHasFixedSize(true);
         adapter = new MyRecyclerViewAdapter(this, new ArrayList<String>());
         //adapter.setHasStableIds(true);
-        //adapter.setClickListener(this);
+        adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
         // Get the ViewModel.
@@ -79,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
                 adapter.setData(imageUrls);
             }
         });
+
+
 
         //mModel.getCurrentImage().observe(this, MyRecyclerViewAdapter.setData(mModel.getCurrentImage()));
 
@@ -100,6 +103,15 @@ public class MainActivity extends AppCompatActivity {
         //mModel.getCurrentImage().observe(this, imageObserver);
 
 
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Log.d("mytesttag", "You clicked image " + adapter.getItem(position) + ", which is at cell position " + position);
+        Intent intent = new Intent(this, SingleImageActivity.class);
+        String intentimageurl = adapter.getItem(position);
+        intent.putExtra("com.example.android.catimages.imageurl", intentimageurl);
+        startActivity(intent);
     }
 
     private void getNewImages () {

@@ -6,12 +6,12 @@ import android.arch.lifecycle.ViewModel;
 import java.util.ArrayList;
 
 public class ImageViewModel extends ViewModel {
-    private MutableLiveData<ArrayList<String>> mCurrentImage;
+    private MutableLiveData<ArrayList<String>> mImages;
 
-    public MutableLiveData<ArrayList<String>> getCurrentImage() {
-        if (mCurrentImage == null) {
-            mCurrentImage = new MutableLiveData<>();
+    public MutableLiveData<ArrayList<String>> getImages() {
+        if (mImages == null) {
+            mImages = new MutableLiveData<>();
         }
-        return mCurrentImage;
+        return mImages;
     }
 }

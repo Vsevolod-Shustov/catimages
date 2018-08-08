@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         // Get the ViewModel.
         mModel = ViewModelProviders.of(this).get(ImageViewModel.class);
 
-        mModel.getCurrentImage().observe(MainActivity.this, new Observer<ArrayList<String>>() {
+        mModel.getImages().observe(MainActivity.this, new Observer<ArrayList<String>>() {
             @Override
             public void onChanged(@Nullable ArrayList<String> imageUrls) {
                 adapter.setData(imageUrls);
@@ -134,8 +134,8 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
                     Log.d("mytesttag", "Image URL is: "+ parsedImageUrl);
                     //imageUrls = parsedImageUrl;
                     //mModel.getCurrentImage().setValue(parsedImageUrl.get(0));
-                    mModel.getCurrentImage().setValue(parsedImageUrl);
-                    Log.d("mytesttag", "breakpoint 1: "+ mModel.getCurrentImage());
+                    mModel.getImages().setValue(parsedImageUrl);
+                    Log.d("mytesttag", "breakpoint 1: "+ mModel.getImages());
                     //loadImagesIntoViews(imageUrls.get(0));
                 }
             }, new Response.ErrorListener() {

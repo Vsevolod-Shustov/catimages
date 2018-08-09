@@ -29,31 +29,31 @@ public class Parsers {
                     case XmlPullParser.START_TAG:
                         if (parser.getName().equals(tag)) {
                             // Found tag, start appending to tagContents
-                            Log.d("xmlpullparser", "Found tag, start appending to tagContents");
+                            //Log.d("xmlpullparser", "Found tag, start appending to tagContents");
                             foundTag = true;
                         } else if (foundTag) {
                             // New start tag inside desired tag
-                            Log.d("xmlpullparser", "New start tag inside desired tag");
+                            //Log.d("xmlpullparser", "New start tag inside desired tag");
                             tagContents.append("<" + parser.getName() + ">");
                         }
                         break;
                     case XmlPullParser.END_TAG:
                         if (parser.getName().equals(tag)) {
                             // Finished gathering text for tag
-                            Log.d("xmlpullparser", "Finished gathering text for tag");
+                            //Log.d("xmlpullparser", "Finished gathering text for tag");
                             result.add(tagContents.toString());
                             foundTag = false;
                             tagContents.setLength(0);
                         } else if (foundTag) {
                             // end tag inside desired tag
-                            Log.d("xmlpullparser", "end tag inside desired tag");
+                            //Log.d("xmlpullparser", "end tag inside desired tag");
                             tagContents.append("</" + parser.getName() + ">");
                         }
                         break;
                     case XmlPullParser.TEXT:
                         if (foundTag) {
                             // text inside desired tag
-                            Log.d("xmlpullparser", "text inside desired tag");
+                            //Log.d("xmlpullparser", "text inside desired tag");
                             tagContents.append(parser.getText());
                         }
                         break;
@@ -61,7 +61,7 @@ public class Parsers {
                 // Get next event type
                 eventType = parser.next();
             }
-            Log.d("xmlpullparser", result.toString());
+            //Log.d("xmlpullparser", result.toString());
             return result;
             //return null;
         } catch (Exception e) {

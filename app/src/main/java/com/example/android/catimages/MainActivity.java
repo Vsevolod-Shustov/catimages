@@ -85,21 +85,18 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
             @Override
             public void onChanged(@Nullable ArrayList<String> imageUrls) {
                 adapter.setData(imageUrls);
-                //Log.d("mytesttag", "data set to adapter:" + imageUrls);
-                //prefs.edit().putString("imageUrls", imageUrls.toString()).apply();
-                Set<String> set = new HashSet<String>();
-                set.addAll(imageUrls);
-                prefs.edit().putStringSet("imageUrls", set).apply();
+                Log.d("mytesttag", "data set to adapter:" + imageUrls);
+                prefs.edit().putString("imageUrls", imageUrls.toString()).apply();
             }
         });
 
-        if (prefs.getStringSet("imageUrls", null) != null) {
+        if (prefs.getString("imageUrls", null) != null) {
             Log.d("mytesttag", "restoring previous images");
 
-            Set<String> sharedset = prefs.getStringSet("imageUrls", null);
-            Log.d("mytesttag", "sharedset: " + sharedset);
+            String sharedstring = prefs.getString("imageUrls", null);
+            Log.d("mytesttag", "sharedstring: " + sharedstring);
 
-            ArrayList<String> sharedlist = new ArrayList<>(sharedset);
+            ArrayList<String> sharedlist = new ArrayList<String>(Arrays.asList(sharedstring.replaceAll("^\\[|]$", "").split(", ")));
             Log.d("mytesttag", "sharedlist: " + sharedlist);
 
             mModel.getImages().setValue(sharedlist);

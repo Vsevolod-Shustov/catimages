@@ -1,6 +1,9 @@
 package com.example.android.catimages;
 
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.os.Build;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +44,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 .load(image)
                 .centerCrop()
                 .into(imageView);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+        }
     }
 
     // total number of rows

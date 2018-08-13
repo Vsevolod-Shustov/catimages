@@ -1,13 +1,18 @@
 package com.example.android.catimages;
 
+import android.app.ActivityOptions;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -113,7 +118,17 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         Intent intent = new Intent(this, SingleImageActivity.class);
         String intentimageurl = adapter.getItem(position);
         intent.putExtra("com.example.android.catimages.imageurl", intentimageurl);
-        startActivity(intent);
+        // Check if we're running on Android 5.0 or higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    // the context of the activity
+                    MainActivity.this,
+                    new Pair<View, String>(view.findViewById(R.id.recyclerview_gridimage), "imageTransition"));
+            ActivityCompat.startActivity(MainActivity.this, intent, options.toBundle());
+        } else {
+            startActivity(intent);
+        }
+
     }
 
     private void getNewImages () {

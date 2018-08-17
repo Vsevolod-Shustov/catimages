@@ -123,7 +123,8 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     // the context of the activity
                     MainActivity.this,
-                    new Pair<View, String>(view.findViewById(R.id.recyclerview_gridimage), "imageTransition"));
+                    view,
+                    "imageTransition");
             ActivityCompat.startActivity(MainActivity.this, intent, options.toBundle());
         } else {
             startActivity(intent);

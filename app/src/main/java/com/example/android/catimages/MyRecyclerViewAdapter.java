@@ -4,12 +4,16 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.util.Pair;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,15 +42,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(ViewHolder holder, int position) {
         ImageView imageView = holder.myImageView;
         String image = mData.get(position);
-        //holder.myTextView.setText(animal);
+        ViewCompat.setTransitionName(holder.itemView, image);
+        Log.d("mytesttag", "recycler transition name set to " + image);
         Context recyclerviewContext = imageView.getContext();
         GlideApp.with(recyclerviewContext)
                 .load(image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .into(imageView);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-        }
     }
 
     // total number of rows

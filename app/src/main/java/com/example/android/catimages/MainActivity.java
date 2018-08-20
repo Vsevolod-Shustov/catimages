@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
                     // the context of the activity
                     MainActivity.this,
                     view,
-                    "imageTransition");
+                    intentimageurl);
             ActivityCompat.startActivity(MainActivity.this, intent, options.toBundle());
         } else {
             startActivity(intent);

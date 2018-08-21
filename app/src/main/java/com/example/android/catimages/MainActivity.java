@@ -41,7 +41,9 @@ import static com.example.android.catimages.Parsers.parseXMLForTag;
 
 
 public class MainActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
-    private String requestUrl ="http://thecatapi.com/api/images/get?format=xml&type=jpg&size=med&results_per_page=12";
+//    private String requestUrl ="http://thecatapi.com/api/images/get?format=xml&type=jpg&size=med&results_per_page=12";
+    private String requestUrl ="https://api.thecatapi.com/api/images/get.php?format=xml&type=jpg&size=med&results_per_page=12";
+
     //private String imageUrl = "http://24.media.tumblr.com/tumblr_m3dr9lfmr81r73wdao1_500.jpg";
     //private ArrayList<String> imageUrlsForSavingState = new ArrayList<String>();
     private String imageUrlsForSavingState;

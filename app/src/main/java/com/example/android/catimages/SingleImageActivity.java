@@ -1,5 +1,6 @@
 package com.example.android.catimages;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -8,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +23,10 @@ public class SingleImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_image);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();  //Make sure you are extending ActionBarActivity
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             postponeEnterTransition();
         }
@@ -54,5 +60,15 @@ public class SingleImageActivity extends AppCompatActivity {
         }
         TextView textView = findViewById(R.id.source_backlink);
         textView.append(" " + intentimageurl);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();    //Call the back button's method
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

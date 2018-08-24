@@ -52,10 +52,14 @@ public class SingleImageActivity extends AppCompatActivity {
                             return false;
                         }
                     })
+                    .dontAnimate()
+                    .dontTransform()
                     .into(imageView);
         } else {
             GlideApp.with(this)
                     .load(intentimageurl)
+                    .dontAnimate()
+                    .dontTransform()
                     .into(imageView);
         }
         TextView textView = findViewById(R.id.source_backlink);

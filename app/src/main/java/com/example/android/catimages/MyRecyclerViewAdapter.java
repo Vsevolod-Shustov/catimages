@@ -48,7 +48,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         GlideApp.with(recyclerviewContext)
                 .load(image)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
+                //.centerCrop()
                 .into(imageView);
     }
 

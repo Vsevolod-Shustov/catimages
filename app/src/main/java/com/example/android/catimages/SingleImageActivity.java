@@ -52,13 +52,13 @@ public class SingleImageActivity extends AppCompatActivity {
                             return false;
                         }
                     })
-                    .dontAnimate()
+                    //.dontAnimate()
                     .dontTransform()
                     .into(imageView);
         } else {
             GlideApp.with(this)
                     .load(intentimageurl)
-                    .dontAnimate()
+                    //.dontAnimate()
                     .dontTransform()
                     .into(imageView);
         }

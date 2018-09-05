@@ -2,14 +2,20 @@ package com.example.android.catimages;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +23,9 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class SingleImageActivity extends AppCompatActivity {
     @Override
@@ -62,8 +71,19 @@ public class SingleImageActivity extends AppCompatActivity {
                     .dontTransform()
                     .into(imageView);
         }
+
         TextView textView = findViewById(R.id.source_backlink);
         textView.append(" " + intentimageurl);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BitmapDrawable draw = (BitmapDrawable) imageView.getDrawable();
+                Bitmap bitmap = draw.getBitmap();
+                MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "cat" , "cat image");
+            }
+        });
     }
 
     @Override

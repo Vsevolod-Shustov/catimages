@@ -8,8 +8,8 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.StringReader;
 import java.util.ArrayList;
 
-public class Parsers {
-    public static ArrayList<String> parseXMLForTag(String xml, String tag) {
+class Parsers {
+    static ArrayList<String> parseXMLForTag(String xml, String tag) {
         try {
             // Create XMLPullParserFactory & XMLPullParser
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();

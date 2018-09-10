@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -81,7 +82,8 @@ public class SingleImageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 BitmapDrawable draw = (BitmapDrawable) imageView.getDrawable();
                 Bitmap bitmap = draw.getBitmap();
-                MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "cat" , "cat image");
+                MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "intentimageurl" , "cat image");
+                Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
             }
         });
     }

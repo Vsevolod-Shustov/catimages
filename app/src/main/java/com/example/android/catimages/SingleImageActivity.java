@@ -1,7 +1,9 @@
 package com.example.android.catimages;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -27,8 +29,11 @@ import com.bumptech.glide.request.target.Target;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SingleImageActivity extends AppCompatActivity {
+    ArrayList<String> savedFilesList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,12 @@ public class SingleImageActivity extends AppCompatActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();  //Make sure you are extending ActionBarActivity
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
+        SharedPreferences prefs = this.getPreferences(Context.MODE_PRIVATE);
+
+        if (prefs.getString("savedFilesList", null) != null) {
+            savedFilesList = new ArrayList<String>(Arrays.asList(prefs.getString("savedFilesList", null).replaceAll("^\\[|]$", "").split(", ")));
+        }
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             postponeEnterTransition();
@@ -80,10 +91,16 @@ public class SingleImageActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BitmapDrawable draw = (BitmapDrawable) imageView.getDrawable();
-                Bitmap bitmap = draw.getBitmap();
-                MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "intentimageurl" , "cat image");
-                Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+                if (savedFilesList.contains(intentimageurl)) {
+                    Toast.makeText(getApplicationContext(), "Already saved", Toast.LENGTH_LONG).show();
+                } else {
+                    BitmapDrawable draw = (BitmapDrawable) imageView.getDrawable();
+                    Bitmap bitmap = draw.getBitmap();
+                    MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "intentimageurl", "cat image");
+                    savedFilesList.add(intentimageurl);
+                    prefs.edit().putString("savedFilesList", savedFilesList.toString()).apply();
+                    Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

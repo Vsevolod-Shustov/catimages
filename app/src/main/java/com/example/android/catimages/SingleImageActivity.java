@@ -2,6 +2,7 @@ package com.example.android.catimages;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -13,6 +14,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -34,6 +36,10 @@ import java.util.Arrays;
 
 public class SingleImageActivity extends AppCompatActivity {
     ArrayList<String> savedFilesList = new ArrayList<>();
+    ImageView imageView;
+    String intentimageurl;
+    SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +47,7 @@ public class SingleImageActivity extends AppCompatActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();  //Make sure you are extending ActionBarActivity
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-        SharedPreferences prefs = this.getPreferences(Context.MODE_PRIVATE);
+        prefs = this.getPreferences(Context.MODE_PRIVATE);
 
         if (prefs.getString("savedFilesList", null) != null) {
             savedFilesList = new ArrayList<String>(Arrays.asList(prefs.getString("savedFilesList", null).replaceAll("^\\[|]$", "").split(", ")));
@@ -52,8 +58,8 @@ public class SingleImageActivity extends AppCompatActivity {
             postponeEnterTransition();
         }
         Intent intent = getIntent();
-        String intentimageurl = intent.getStringExtra("com.example.android.catimages.imageurl");
-        ImageView imageView = findViewById(R.id.singleimage);
+        intentimageurl = intent.getStringExtra("com.example.android.catimages.imageurl");
+        imageView = findViewById(R.id.singleimage);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             imageView.setTransitionName(intentimageurl);
             Log.d("mytesttag", "detail transition name set to " + intentimageurl);
@@ -87,22 +93,49 @@ public class SingleImageActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.source_backlink);
         textView.append(" " + intentimageurl);
 
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage("You have already saved this image. Save again?");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        saveImage();
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (savedFilesList.contains(intentimageurl)) {
-                    Toast.makeText(getApplicationContext(), "Already saved", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Already saved", Toast.LENGTH_LONG).show();
+                    alert11.show();
                 } else {
-                    BitmapDrawable draw = (BitmapDrawable) imageView.getDrawable();
-                    Bitmap bitmap = draw.getBitmap();
-                    MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "intentimageurl", "cat image");
-                    savedFilesList.add(intentimageurl);
-                    prefs.edit().putString("savedFilesList", savedFilesList.toString()).apply();
-                    Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+                    saveImage();
                 }
             }
         });
+    }
+
+    private void saveImage(){
+        BitmapDrawable draw = (BitmapDrawable) imageView.getDrawable();
+        Bitmap bitmap = draw.getBitmap();
+        MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "intentimageurl", "cat image");
+        savedFilesList.add(intentimageurl);
+        prefs.edit().putString("savedFilesList", savedFilesList.toString()).apply();
+        Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
     }
 
     @Override

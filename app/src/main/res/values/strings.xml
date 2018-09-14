@@ -2,4 +2,5 @@
     <string name="app_name">Cat Images</string>
     <string name="api_backlink">Powered by <a href="http://thecatapi.com/">thecatapi.com</a></string>
     <string name="source_backlink">Source:</string>
+    <string name="preferences">Preferences</string>
 </resources>

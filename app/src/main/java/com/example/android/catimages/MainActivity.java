@@ -35,12 +35,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import static com.example.android.catimages.Parsers.parseXMLForTag;
 
@@ -62,8 +58,10 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         SharedPreferences prefs = this.getPreferences(Context.MODE_PRIVATE);
+
+        android.preference.PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        SharedPreferences settings = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
 
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
@@ -98,19 +96,22 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
             @Override
             public void onChanged(@Nullable ArrayList<String> imageUrls) {
                 adapter.setData(imageUrls);
-                Log.d("mytesttag", "data set to adapter:" + imageUrls);
+                //Log.d("mytesttag", "data set to adapter:" + imageUrls);
                 prefs.edit().putString("imageUrls", imageUrls.toString()).apply();
             }
         });
 
-        if (prefs.getString("imageUrls", null) != null) {
+        if (settings.getBoolean("loadNewImagesOnLaunch", false)) {
+            Log.d("mytesttag", "loadNewImagesOnLaunch is true, getting new images");
+            getNewImages();
+        } else if (prefs.getString("imageUrls", null) != null ) {
             Log.d("mytesttag", "restoring previous images");
 
             String sharedstring = prefs.getString("imageUrls", null);
-            Log.d("mytesttag", "sharedstring: " + sharedstring);
+            //Log.d("mytesttag", "sharedstring: " + sharedstring);
 
             ArrayList<String> sharedlist = new ArrayList<String>(Arrays.asList(sharedstring.replaceAll("^\\[|]$", "").split(", ")));
-            Log.d("mytesttag", "sharedlist: " + sharedlist);
+            //Log.d("mytesttag", "sharedlist: " + sharedlist);
 
             mModel.getImages().setValue(sharedlist);
         } else {

@@ -43,7 +43,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         ImageView imageView = holder.myImageView;
         String image = mData.get(position);
         ViewCompat.setTransitionName(holder.itemView, image);
-        Log.d("mytesttag", "recycler transition name set to " + image);
+        //Log.d("mytesttag", "recycler transition name set to " + image);
         Context recyclerviewContext = imageView.getContext();
         GlideApp.with(recyclerviewContext)
                 .load(image)

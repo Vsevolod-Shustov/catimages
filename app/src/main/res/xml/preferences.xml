@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-        <CheckBoxPreference android:title="Load new images on app launch"
+    <PreferenceCategory
+        android:key="pref_key_display_settings"
+        android:title="Display">
+        <ListPreference
+            android:title="Portrait columns"
+            android:defaultValue="2"
+            android:summary="%s"
+            android:key="portrait_columns"
+            android:entries="@array/listArray"
+            android:entryValues="@array/listValues"/>
+        <ListPreference
+            android:title="Landscape columns"
+            android:defaultValue="3"
+            android:summary="%s"
+            android:key="landscape_columns"
+            android:entries="@array/listArray"
+            android:entryValues="@array/listValues"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="pref_key_data_settings"
+        android:title="Data">
+        <CheckBoxPreference
             android:defaultValue="false"
-            android:summary="If not checked, displays images from last launch"
-            android:key="loadNewImagesOnLaunch" />
+            android:key="loadNewImagesOnLaunch"
+            android:title="Load new images on app launch"
+            android:summary="If not checked, displays images from last launch" />
+    </PreferenceCategory>
 </PreferenceScreen>

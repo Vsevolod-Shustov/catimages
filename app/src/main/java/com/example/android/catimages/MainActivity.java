@@ -7,6 +7,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -78,7 +79,14 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         //int numberOfColumns = 2;
         //recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.column_count)));
+        //recyclerView.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.column_count)));
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recyclerView.setLayoutManager(new GridLayoutManager(this, Integer.parseInt(settings.getString("landscape_columns", "3"))));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(this, Integer.parseInt(settings.getString("portrait_columns", "2"))));
+        }
+
         ViewCompat.setNestedScrollingEnabled(recyclerView, false);
         //recyclerView.setNestedScrollingEnabled(false);
         //recyclerView.setHasFixedSize(true);

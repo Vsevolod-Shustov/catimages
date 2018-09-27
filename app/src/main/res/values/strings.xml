@@ -3,4 +3,9 @@
     <string name="api_backlink">Powered by <a href="http://thecatapi.com/">thecatapi.com</a></string>
     <string name="source_backlink">Source:</string>
     <string name="preferences">Preferences</string>
+    <string name="menu_about">About</string>
+    <string name="menu_preferences">Preferences</string>
+    <string name="about_version">Cat Images ver. tech demo</string>
+    <string name="about_author">by Vsevolod Shustov</string>
+    <string name="about_mail">vsevolod dot shustov at gmail dot com</string>
 </resources>

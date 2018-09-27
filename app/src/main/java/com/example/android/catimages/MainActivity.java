@@ -179,10 +179,15 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_item_new_thingy:
+            case R.id.menu_preferences:
                 //Toast.makeText(this, "ADD!", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(this, MyPreferencesActivity.class);
-                startActivity(i);
+                Intent prefIntent = new Intent(this, MyPreferencesActivity.class);
+                startActivity(prefIntent);
+                return true;
+            case R.id.menu_about:
+                //Toast.makeText(this, "ADD!", Toast.LENGTH_SHORT).show();
+                Intent aboutIntent = new Intent(this, MyAboutActivity.class);
+                startActivity(aboutIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

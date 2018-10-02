@@ -28,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -166,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         @Override
         public void onErrorResponse(VolleyError error) {
             Log.d("mytesttag", "That didn't work!");
+            Toast.makeText(getApplicationContext(), "Network error", Toast.LENGTH_SHORT).show();
         }
     });
 
